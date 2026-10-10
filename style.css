@@ -1,16 +1,16 @@
 /* ==========================================================
    Dustin Lee portfolio
-   Night-ops green phosphor, like a cockpit display.
+   Night-ops navy with amber phosphor, like a cockpit display.
    ========================================================== */
 
 :root {
-    --abyss: #050C0A;      /* page */
-    --deck: #0A1712;       /* raised surfaces */
-    --rule: #1A3326;       /* lines, borders */
-    --ice: #DDF2E5;        /* primary text */
-    --haze: #86A896;       /* secondary text */
-    --signal: #78FFA0;     /* green phosphor accent */
-    --signal-soft: rgba(120, 255, 160, 0.14);
+    --abyss: #07101C;      /* page */
+    --deck: #0D1828;       /* raised surfaces */
+    --rule: #1C2C42;       /* lines, borders */
+    --ice: #DCE6F1;        /* primary text */
+    --haze: #8698AF;       /* secondary text */
+    --signal: #FFB547;     /* amber phosphor accent */
+    --signal-soft: rgba(255, 181, 71, 0.14);
 
     --display: "Saira Condensed", "Arial Narrow", sans-serif;
     --body: "IBM Plex Sans", system-ui, sans-serif;
@@ -47,8 +47,8 @@ body::before {
     inset: 0;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(134, 168, 150, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(134, 168, 150, 0.05) 1px, transparent 1px);
+        linear-gradient(rgba(134, 152, 175, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(134, 152, 175, 0.05) 1px, transparent 1px);
     background-size: 64px 64px;
     mask-image: radial-gradient(ellipse at 70% 20%, #000 0%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse at 70% 20%, #000 0%, transparent 75%);
@@ -287,7 +287,7 @@ h1, h2, h3, h4 {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(5, 12, 10, 0.72);
+    background: rgba(7, 16, 28, 0.72);
     backdrop-filter: blur(14px) saturate(140%);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     border-bottom: 1px solid transparent;
@@ -344,7 +344,7 @@ h1, h2, h3, h4 {
     font-weight: 500;
 }
 
-.nav ul a.nav-cta:hover { color: var(--abyss); background: #A6FFC0; }
+.nav ul a.nav-cta:hover { color: var(--abyss); background: #FFC56E; }
 
 /* ---------------- Hero ---------------- */
 
@@ -419,7 +419,7 @@ body.ready .hero-inner { opacity: 1; transform: none; }
 }
 
 .btn-primary { background: var(--signal); color: var(--abyss); }
-.btn-primary:hover { background: #A6FFC0; }
+.btn-primary:hover { background: #FFC56E; }
 
 .btn-ghost { border: 1px solid var(--rule); color: var(--ice); }
 .btn-ghost:hover { border-color: var(--haze); }
@@ -459,14 +459,14 @@ body.ready .hero-inner { opacity: 1; transform: none; }
     height: 8px;
     border-radius: 50%;
     background: var(--signal);
-    box-shadow: 0 0 0 0 rgba(120, 255, 160, 0.6);
+    box-shadow: 0 0 0 0 rgba(255, 181, 71, 0.6);
     animation: pulse 2.4s infinite;
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(120, 255, 160, 0.55); }
-    70% { box-shadow: 0 0 0 10px rgba(120, 255, 160, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(120, 255, 160, 0); }
+    0% { box-shadow: 0 0 0 0 rgba(255, 181, 71, 0.55); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 181, 71, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 181, 71, 0); }
 }
 
 /* ---------------- Sections ---------------- */
@@ -500,6 +500,73 @@ body.ready .hero-inner { opacity: 1; transform: none; }
 }
 
 .prose p:last-child { margin-bottom: 0; color: var(--haze); }
+
+/* About: life outside work */
+.off-hours { margin-top: 2.5rem; }
+
+.off-hours h3 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--haze);
+    margin-bottom: 1rem;
+}
+
+.hobbies {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.hobbies li {
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--deck);
+    transition: border-color 0.2s;
+}
+
+.hobbies li:hover { border-color: rgba(255, 181, 71, 0.45); }
+
+.hobbies p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--haze);
+}
+
+.hobbies .hobby-tag {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--ice);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hobby-new {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--signal);
+    border: 1px solid rgba(255, 181, 71, 0.45);
+    background: var(--signal-soft);
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+}
+
+@media (max-width: 760px) {
+    .hobbies { grid-template-columns: 1fr; }
+}
 
 /* Experience: a flight track, newest first */
 .track {
@@ -592,7 +659,7 @@ body.ready .hero-inner { opacity: 1; transform: none; }
 }
 
 .courses div:nth-child(-n+2) span {
-    border-color: rgba(120, 255, 160, 0.45);
+    border-color: rgba(255, 181, 71, 0.45);
     color: var(--ice);
     background: var(--signal-soft);
 }
@@ -615,7 +682,7 @@ body.ready .hero-inner { opacity: 1; transform: none; }
     transition: border-color 0.25s;
 }
 
-.feature:hover { border-color: rgba(120, 255, 160, 0.45); }
+.feature:hover { border-color: rgba(255, 181, 71, 0.45); }
 
 .feature-glyph {
     width: 84px;
@@ -727,7 +794,7 @@ body.ready .hero-inner { opacity: 1; transform: none; }
     font-size: clamp(1.6rem, 5vw, 3rem);
     color: var(--signal);
     text-decoration: none;
-    border-bottom: 2px solid rgba(120, 255, 160, 0.35);
+    border-bottom: 2px solid rgba(255, 181, 71, 0.35);
     transition: border-color 0.2s;
     word-break: break-all;
 }

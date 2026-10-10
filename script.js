@@ -7,9 +7,9 @@
     const easeOut = t => 1 - Math.pow(1 - t, 3);
     const easeIn = t => t * t * t;
 
-    const GREEN_ACCENT = '120, 255, 160';
-    const HAZE = '134, 168, 150';
-    const ABYSS = '#050C0A';
+    const AMBER = '255, 181, 71';
+    const HAZE = '134, 152, 175';
+    const ABYSS = '#07101C';
 
     /* ---------------- Clocks ---------------- */
 
@@ -888,8 +888,8 @@
 
         // Planet
         const g = hctx.createRadialGradient(cx - planetR * 0.35, cy - planetR * 0.4, planetR * 0.1, cx, cy, planetR);
-        g.addColorStop(0, '#13301F');
-        g.addColorStop(1, '#081510');
+        g.addColorStop(0, '#16263C');
+        g.addColorStop(1, '#0A1422');
         hctx.fillStyle = g;
         hctx.beginPath(); hctx.arc(cx, cy, planetR, 0, Math.PI * 2); hctx.fill();
         hctx.strokeStyle = `rgba(${HAZE}, 0.3)`;
@@ -924,9 +924,9 @@
                 const behind = th > Math.PI && Math.hypot(x - cx, y - cy) < planetR;
                 if (behind) return;
                 const far = th > Math.PI;
-                hctx.fillStyle = `rgba(${GREEN_ACCENT}, ${far ? 0.18 : 0.25})`;
+                hctx.fillStyle = `rgba(${AMBER}, ${far ? 0.18 : 0.25})`;
                 hctx.beginPath(); hctx.arc(x, y, 6, 0, Math.PI * 2); hctx.fill();
-                hctx.fillStyle = `rgba(${GREEN_ACCENT}, ${far ? 0.5 : 0.95})`;
+                hctx.fillStyle = `rgba(${AMBER}, ${far ? 0.5 : 0.95})`;
                 hctx.beginPath(); hctx.arc(x, y, 2.2, 0, Math.PI * 2); hctx.fill();
             });
         });
