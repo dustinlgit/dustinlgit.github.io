@@ -1,102 +1,231 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dustin Lee | Home</title>
+    <title>Dustin Lee | Software Engineer</title>
+    <meta name="description" content="Dustin Lee is a software engineer focused on C++, embedded, and space and defense systems. UC Irvine computer science. Los Angeles, CA.">
+    <meta property="og:title" content="Dustin Lee | Software Engineer">
+    <meta property="og:description" content="Software engineer building for space and defense systems.">
+    <meta name="theme-color" content="#07101C">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307101C'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23FFB547' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='5' fill='none' stroke='%23FFB547' stroke-opacity='.5'/%3E%3Ccircle cx='21' cy='11' r='2' fill='%23FFB547'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Saira+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <noscript><style>#intro{display:none!important}body{overflow:auto!important}.hero-inner{opacity:1!important;transform:none!important}</style></noscript>
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">Dustin Lee</a>
-            <nav class="nav">
+<body class="intro-active">
+
+    <!-- Intro: radar scope acquires a track, then zooms into the site -->
+    <div id="intro" class="intro">
+        <canvas class="intro-canvas" aria-hidden="true"></canvas>
+        <div class="intro-log" aria-hidden="true">
+            <p style="--d:.15s">&gt; uplink established</p>
+            <p style="--d:.65s">&gt; satcom link nominal</p>
+            <p style="--d:1.15s">&gt; radar sweep active</p>
+            <p style="--d:2.4s">&gt; acquiring track</p>
+            <p class="ok" style="--d:3.9s">&gt; track acquired</p>
+        </div>
+        <div class="intro-name" aria-hidden="true">
+            <span class="intro-name-text">Dustin Lee</span>
+            <span class="intro-name-sub">Software engineer</span>
+        </div>
+        <button type="button" class="intro-skip" aria-label="Skip intro">Skip intro</button>
+    </div>
+
+    <header class="nav">
+        <div class="wrap nav-inner">
+            <a href="#top" class="nav-mark" aria-label="Dustin Lee, back to top">
+                <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="16" r="6.5" fill="none" stroke="currentColor" stroke-opacity=".45"/><circle cx="22.5" cy="9.5" r="2.4" fill="currentColor"/></svg>
+                <span>Dustin Lee</span>
+            </a>
+            <nav aria-label="Primary">
                 <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
                     <li><a href="#projects">Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#contact" class="nav-cta">Contact</a></li>
                 </ul>
             </nav>
-            <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
         </div>
     </header>
 
-    <main>
-        <div class="container">
-            <section class="hero">
-                <h1>Dustin Lee</h1>
-                <p class="tagline">Building solutions that bridge software, strategy, and real-world impact.</p>
-                <p class="summary">
-                    I’m a technologist and problem-solver with a passion for math, coding, and finding ways to help others. I love digging into challenges, learning new things, and building tools or solutions that make a difference. Right now, I’m studying for the CFA and constantly exploring new ideas and skills. I’m also inspired by Panasonci and the way they approach innovation and technology—always pushing boundaries and creating meaningful impact.
-                </p>
-            </section>
-
-            <section id="about" class="about-content">
-                <h2 style="text-align: center;">My Story</h2>
-                <p>
-                    I get energized by working with others to tackle complex problems and break them down into simple, scalable solutions. I’ve collaborated with startups, enterprise teams, and nonprofits to build projects that make a real difference for people. No matter the context, I care most about creating meaningful, practical solutions and seeing them through from idea to impact.
-                </p>
-                <p>
-                    Outside of work or school, I love to travel the country and globe, hit the gym, and build things in my free time.
-                </p>
-            </section>
-
-            <section id="projects" class="projects-content">
-                <h2 style="text-align: center;">Some Things I've Built</h2>
-                <div class="project-grid">
-                    <div class="project-card">
-                        <h3>Wing-It</h3>
-                        <p class="impact">A swipe-based travel agent to find where you want to travel.</p>
-                        <a href="https://github.com/dustinlgit/wing-it" target="_blank">View on my Github &rarr;</a>
-                    </div>
-                    <div class="project-card">
-                        <h3></h3>
-                        <p class="impact">A real time model I am building to track the S&P 500.</p>
-                        <p><em>Coming out soon</em></p>
-                    </div>
-                    <div class="project-card">
-                        <h3>MovieMate</h3>
-                        <p class="impact">A movie recommendation application to allow users find a best curated movie result.</p>
-                        <a href="https://github.com/dustinlgit/MovieMate" target="_blank">View on my Github &rarr;</a>
-                    </div>
-                    <div class="project-card">
-                        <h3>Derivative Calculator</h3>
-                        <p class="impact">Fun project I made to integrate my love for math with C++.</p>
-                        <a href="https://github.com/dustinlgit/derivative-calculator" target="_blank">View on my Github &rarr;</a>
-                    </div>
-                    <div class="project-card">
-                        <h3>Financify</h3>
-                        <p class="impact">A financial budgeting application.</p>
-                        <a href="https://github.com/dustinlgit/financify" target="_blank">View on my Github &rarr;</a>
+    <main id="top">
+        <section class="hero">
+            <canvas class="hero-orbits" aria-hidden="true"></canvas>
+            <div class="wrap hero-inner">
+                <div class="hero-main">
+                    <h1>Dustin<br>Lee</h1>
+                    <p class="hero-lede">Software engineer building for space and defense systems.</p>
+                    <p class="hero-sub">UC Irvine computer science graduate. I work at Space Systems Command on satellite communications modernization, and write C++ for radar tracking and orbit propagation.</p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">See projects</a>
+                        <a href="mailto:leeddustin@gmail.com" class="btn btn-ghost">Email me</a>
                     </div>
                 </div>
-            </section>
+                <dl class="readout" aria-label="Status">
+                    <div><dt>Pacific</dt><dd id="clock-local">--:--:--</dd></div>
+                    <div><dt>Zulu</dt><dd id="clock-zulu">--:--:--Z</dd></div>
+                    <div><dt>Position</dt><dd>34.05° N, 118.24° W</dd></div>
+                    <div><dt>Status</dt><dd class="status-live"><span class="pulse" aria-hidden="true"></span>Open to SWE roles</dd></div>
+                </dl>
+            </div>
+        </section>
 
-            <section id="contact" class="contact-content" style="text-align: center;">
-                <h2>Get In Touch</h2>
-                <p>I'm always open to discussing new projects, creative ideas, or opportunities. Feel free to reach out.</p>
-                <div class="contact-links">
-                    <a href="mailto:leeddustin@gmail.com" class="contact-link" aria-label="Email">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z"></path>
-                        </svg>
-                        <span>leeddustin@gmail.com</span>
-                    </a>
-                    <a href="https://linkedin.com/in/dustindlee" target="_blank" class="contact-link" aria-label="LinkedIn">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                            <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 13 11.18V10.13H9.75V18.5H13V13.57C13 12.8 13.44 12.25 14.2 12.25C14.96 12.25 15.5 12.8 15.5 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 6 7.76 5.19 6.88 5.19C6 5.19 5.19 6 5.19 6.88C5.19 7.76 6 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"></path>
-                        </svg>
-                        <span>linkedin.com/in/dustindlee</span>
-                    </a>
+        <section id="about" class="section">
+            <div class="wrap section-grid">
+                <h2>About</h2>
+                <div class="section-body prose">
+                    <p>At Space Systems Command I support the Enterprise Management &amp; Control program, which is modernizing how the Space Force manages its satellite communications architecture. I'm the program's AI/ML lead, working alongside prime contractors and systems engineers, and I write Python tooling for our cost and budget teams.</p>
+                    <p>That work gives me a close view of how large defense systems are designed, tested, and fielded. I want to be on the engineering side of it: writing reliable, well-tested software for hardware that has to work the first time.</p>
                 </div>
-                <p class="based-in">Based in Los Angeles, CA and Irvine, CA</p>
-            </section>
-        </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <div class="wrap section-grid">
+                <h2>Experience</h2>
+                <ol class="track section-body">
+                    <li class="track-item current">
+                        <p class="track-when">July 2026 to present</p>
+                        <h3>Technical Program Manager</h3>
+                        <p class="track-org">Space Systems Command, U.S. Space Force, El Segundo</p>
+                        <p class="track-desc">I'm the AI/ML lead on Enterprise Management &amp; Control, a program modernizing how the Space Force manages its satellite communications architecture. I'm the point of contact for our AI vendor on technical decisions, and I work with the systems engineering and integration team and our prime contractors to keep cost, schedule, and performance on track. On the side, I write Python tooling that helps our cost and budget teams work faster.</p>
+                    </li>
+                    <li class="track-item">
+                        <p class="track-when">June 2026 to August 2026</p>
+                        <h3>Full Stack Software Engineer (Contract)</h3>
+                        <p class="track-org">Better Pools LA, Porter Ranch</p>
+                        <p class="track-desc">I architected and shipped the platform that now runs the business: a React front end on a Supabase/PostgreSQL back end, deployed on Vercel, with all company data migrated off QuickBooks into one database. It has three connected interfaces, a customer portal, an admin and technician back office, and a mobile app for dispatching and reporting jobs. Automating those workflows saves the business about $30,000 a year.</p>
+                    </li>
+                    <li class="track-item">
+                        <p class="track-when">June 2026</p>
+                        <h3>B.S. Computer Science, AI/ML specialization</h3>
+                        <p class="track-org">University of California, Irvine, 3.77 GPA</p>
+                        <p class="track-desc">I specialized in artificial intelligence and machine learning, and paired it with the systems courses that explain how software runs on real hardware. I transferred to UC Irvine from Los Angeles Pierce College.</p>
+                        <dl class="courses">
+                            <div>
+                                <dt>AI and machine learning</dt>
+                                <dd><span>Intro to Artificial Intelligence</span><span>Machine Learning and Data Mining</span><span>Computer Vision</span><span>Information Retrieval</span></dd>
+                            </div>
+                            <div>
+                                <dt>Systems</dt>
+                                <dd><span>Operating Systems</span><span>Computer Architecture</span><span>Computer Networks</span><span>System Design</span></dd>
+                            </div>
+                            <div>
+                                <dt>Foundations</dt>
+                                <dd><span>Data Structures and Algorithms</span><span>Databases</span></dd>
+                            </div>
+                        </dl>
+                    </li>
+                    <li class="track-item">
+                        <p class="track-when">June 2025 to September 2025</p>
+                        <h3>Software Engineering Intern</h3>
+                        <p class="track-org">Panasonic Avionics, Irvine</p>
+                        <p class="track-desc">I developed and deployed RESTful APIs in Nest.js for Panasonic's enterprise geoservices systems, and wrote PyTest unit tests to keep them reliable. I also built AWS CloudWatch dashboards for real-time analysis that improved system monitoring by 85%, and debugged issues across the integrated services.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="wrap section-grid">
+                <h2>Projects</h2>
+                <div class="section-body">
+                    <div class="featured">
+                        <article class="feature">
+                            <svg class="feature-glyph" viewBox="0 0 120 120" aria-hidden="true">
+                                <circle cx="60" cy="60" r="52"/><circle cx="60" cy="60" r="34"/><circle cx="60" cy="60" r="16"/>
+                                <line x1="60" y1="4" x2="60" y2="116"/><line x1="4" y1="60" x2="116" y2="60"/>
+                                <path class="glyph-sweep" d="M60 60 L60 8 A52 52 0 0 1 104 32 Z"/>
+                                <circle class="glyph-dot" cx="88" cy="34" r="3.5"/><circle class="glyph-dot dim" cx="38" cy="82" r="2.5"/>
+                            </svg>
+                            <p class="feature-status">In development</p>
+                            <h3>Radar contact tracker</h3>
+                            <p>A C++ console application that ingests simulated radar returns and maintains a live track table of contacts.</p>
+                            <p class="stack">C++</p>
+                            <span class="link-muted">Source coming soon</span>
+                        </article>
+                        <article class="feature">
+                            <svg class="feature-glyph" viewBox="0 0 120 120" aria-hidden="true">
+                                <circle cx="60" cy="60" r="16" class="glyph-fill"/>
+                                <ellipse cx="60" cy="60" rx="52" ry="20" transform="rotate(-24 60 60)"/>
+                                <ellipse cx="60" cy="60" rx="40" ry="34" transform="rotate(30 60 60)"/>
+                                <circle class="glyph-dot" cx="104" cy="40" r="3.5"/><circle class="glyph-dot dim" cx="34" cy="94" r="2.5"/>
+                            </svg>
+                            <p class="feature-status">In development</p>
+                            <h3>Satellite orbit propagator</h3>
+                            <p>A C++ implementation of SGP4 with TLE parsing, coordinate transforms, and ground-station pass and visibility prediction.</p>
+                            <p class="stack">C++, SGP4, orbital mechanics</p>
+                            <span class="link-muted">Source coming soon</span>
+                        </article>
+                    </div>
+
+                    <h3 class="subhead">Earlier work</h3>
+                    <ul class="project-list">
+                        <li>
+                            <div>
+                                <h4>Derivative calculator</h4>
+                                <p>Symbolic differentiation engine in C++ that parses expressions and applies calculus rules.</p>
+                            </div>
+                            <a href="https://github.com/dustinlgit/derivative-calculator" target="_blank" rel="noopener">GitHub</a>
+                        </li>
+                        <li>
+                            <div>
+                                <h4>Wing-It</h4>
+                                <p>Swipe-based travel app that helps people discover where they want to go.</p>
+                            </div>
+                            <a href="https://github.com/dustinlgit/wing-it" target="_blank" rel="noopener">GitHub</a>
+                        </li>
+                        <li>
+                            <div>
+                                <h4>MovieMate</h4>
+                                <p>Movie recommendation app that returns curated results based on your preferences.</p>
+                            </div>
+                            <a href="https://github.com/dustinlgit/MovieMate" target="_blank" rel="noopener">GitHub</a>
+                        </li>
+                        <li>
+                            <div>
+                                <h4>Financify</h4>
+                                <p>Personal budgeting application.</p>
+                            </div>
+                            <a href="https://github.com/dustinlgit/financify" target="_blank" rel="noopener">GitHub</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="wrap section-grid">
+                <h2>Skills</h2>
+                <dl class="skills section-body">
+                    <div><dt>Languages</dt><dd>C++, Python, JavaScript, SQL</dd></div>
+                    <div><dt>Systems</dt><dd>Embedded fundamentals, data structures and algorithms, coordinate transforms, target tracking</dd></div>
+                    <div><dt>Tools</dt><dd>Git, Linux, React, PostgreSQL, Supabase, Vercel</dd></div>
+                    <div><dt>Domain</dt><dd>SATCOM ground systems, DoD acquisition, systems engineering</dd></div>
+                </dl>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="wrap">
+                <h2>Let's talk</h2>
+                <p class="contact-lede">I'm looking for software engineering roles in embedded, space, and defense.</p>
+                <a href="mailto:leeddustin@gmail.com" class="contact-email">leeddustin@gmail.com</a>
+                <ul class="contact-links">
+                    <li><a href="https://linkedin.com/in/dustindlee" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/dustinlgit" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Dustin Lee</p>
-            <p class="meta-footer">Built with HTML, CSS, and JavaScript.</p>
+    <footer class="footer">
+        <div class="wrap footer-inner">
+            <p>&copy; 2026 Dustin Lee. Based in Los Angeles.</p>
+            <button type="button" class="replay" id="replay-intro">Replay intro</button>
         </div>
     </footer>
 
