@@ -191,65 +191,6 @@ h1, h2, h3, h4 {
 
 @keyframes fade { to { opacity: 1; } }
 
-/* Start screen: a click is needed before browsers allow sound */
-.intro-gate {
-    position: absolute;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    z-index: 2;
-    cursor: pointer;
-}
-
-.intro.gated .intro-gate { display: flex; }
-
-.intro-start {
-    position: relative;
-    width: 168px;
-    height: 168px;
-    border-radius: 50%;
-    border: 1px solid rgba(120, 255, 160, 0.45);
-    background: radial-gradient(circle, rgba(120, 255, 160, 0.10), transparent 70%);
-    color: var(--scope);
-    font-family: var(--tech-display);
-    font-weight: 500;
-    font-size: 0.8rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-shadow: 0 0 8px rgba(120, 255, 160, 0.6);
-    transition: background 0.25s, border-color 0.25s;
-}
-
-.intro-start:hover {
-    background: radial-gradient(circle, rgba(120, 255, 160, 0.2), transparent 70%);
-    border-color: var(--scope);
-}
-
-.intro-start-ring {
-    position: absolute;
-    inset: -1px;
-    border-radius: 50%;
-    border: 1px solid var(--scope);
-    animation: ping 2s ease-out infinite;
-    pointer-events: none;
-}
-
-@keyframes ping {
-    from { transform: scale(1); opacity: 0.8; }
-    to { transform: scale(1.7); opacity: 0; }
-}
-
-.intro-gate-hint {
-    margin: 0;
-    font-family: var(--tech);
-    font-size: 0.75rem;
-    color: var(--scope-dim);
-}
-
 .intro-controls {
     position: absolute;
     right: clamp(16px, 4vw, 40px);
@@ -276,10 +217,6 @@ h1, h2, h3, h4 {
 .intro-sound:hover { color: var(--scope); border-color: var(--scope-dim); }
 
 .intro-sound[aria-pressed="false"] { opacity: 0.6; }
-
-@media (prefers-reduced-motion: reduce) {
-    .intro-start-ring { animation: none; }
-}
 
 /* ---------------- Nav ---------------- */
 

@@ -83,7 +83,7 @@
     const MAP = '70, 200, 120';      // map video overlay
     const SCOPE_BG = '#040A08';
 
-    let W = 0, H = 0, raf = 0, t0 = 0, running = false, revealed = false, gated = false;
+    let W = 0, H = 0, raf = 0, t0 = 0, running = false, revealed = false;
 
     // Deterministic pseudo-random so the scope looks the same every time
     let seed = 7;
@@ -145,35 +145,43 @@
     const sound = (() => {
         const AC = window.AudioContext || window.webkitAudioContext;
         const VOLUME = 0.9;
-        let ac = null, master = null, bus = null, noise = null;
+        let ac = null, master = null, bus = null, noise = null, pending = null, onChange = () => {};
         let muted = false;
         try { muted = localStorage.getItem('dl-intro-muted') === '1'; } catch (e) { /* storage unavailable */ }
 
-        // Must be called from a click or key press, or the browser keeps audio blocked
+        // The context can be created any time, but browsers keep it silent until a click or key press
+        function ensure() {
+            if (!AC || ac) return;
+            ac = new AC();
+            const comp = ac.createDynamicsCompressor();
+            comp.threshold.value = -16;
+            comp.ratio.value = 4;
+            master = ac.createGain();
+            master.gain.value = muted ? 0 : VOLUME;
+            master.connect(comp);
+            comp.connect(ac.destination);
+
+            const len = ac.sampleRate * 2;
+            noise = ac.createBuffer(1, len, ac.sampleRate);
+            const d = noise.getChannelData(0);
+            for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+
+            ac.onstatechange = () => {
+                if (pending) pending();
+                onChange();
+            };
+        }
+
+        // Call from a click or key press to let audio play
         function unlock() {
-            if (!AC) return;
-            if (!ac) {
-                ac = new AC();
-                const comp = ac.createDynamicsCompressor();
-                comp.threshold.value = -16;
-                comp.ratio.value = 4;
-                master = ac.createGain();
-                master.gain.value = muted ? 0 : VOLUME;
-                master.connect(comp);
-                comp.connect(ac.destination);
-
-                const len = ac.sampleRate * 2;
-                noise = ac.createBuffer(1, len, ac.sampleRate);
-                const d = noise.getChannelData(0);
-                for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-
-                // Older iOS Safari only unlocks after a sound plays inside the gesture
-                const s = ac.createBufferSource();
-                s.buffer = ac.createBuffer(1, 1, ac.sampleRate);
-                s.connect(ac.destination);
-                s.start(0);
-            }
-            if (ac.state === 'suspended') ac.resume();
+            ensure();
+            if (!ac) return;
+            // Older iOS Safari only unlocks after a sound plays inside the gesture
+            const s = ac.createBufferSource();
+            s.buffer = ac.createBuffer(1, 1, ac.sampleRate);
+            s.connect(ac.destination);
+            s.start(0);
+            if (ac.state !== 'running') ac.resume().catch(() => {});
         }
 
         function env(g, T, attack, peak, decay) {
@@ -298,7 +306,9 @@
             const base = ac.currentTime - from + 0.03;
             const at = (t, fn) => { if (t >= from) fn(base + t); };
 
-            at(0, T => hum(T, ZOOM_END + 0.2, 0.05));
+            // Hum runs from wherever the score joins in
+            const humFrom = Math.max(from, 0), humDur = ZOOM_END + 0.2 - humFrom;
+            if (humDur > 1.2) hum(base + humFrom, humDur, 0.05);
 
             // Log lines: a beep, then teletype clicks while the line types out
             intro.querySelectorAll('.intro-log p').forEach(p => {
@@ -354,16 +364,23 @@
         }
 
         function start(elapsed) {
+            ensure();
             if (!ac) return;
             stop(0.02);
-            bus = ac.createGain();
-            bus.connect(master);
-            const go = () => { if (bus) score(elapsed()); };
-            if (ac.state === 'running') go();
-            else ac.resume().then(go, () => {});
+            const run = bus = ac.createGain();
+            run.connect(master);
+            // If audio is still blocked, the score joins in partway once the visitor turns sound on
+            pending = () => {
+                if (bus !== run || ac.state !== 'running') return;
+                pending = null;
+                score(elapsed());
+            };
+            if (ac.state === 'running') pending();
+            else ac.resume().catch(() => {});
         }
 
         function stop(fade = 0.05) {
+            pending = null;
             if (!bus) return;
             const old = bus;
             bus = null;
@@ -377,15 +394,21 @@
             if (master) master.gain.setTargetAtTime(m ? 0 : VOLUME, ac.currentTime, 0.03);
         }
 
-        return { unlock, start, stop, setMuted, isMuted: () => muted, supported: !!AC };
+        return {
+            unlock, start, stop, setMuted,
+            audible: () => !muted && !!ac && ac.state === 'running',
+            onChange: fn => { onChange = fn; },
+            supported: !!AC
+        };
     })();
 
     function syncSoundBtn() {
-        const on = !sound.isMuted();
+        const on = sound.audible();
         soundBtn.setAttribute('aria-pressed', String(on));
         soundBtn.textContent = on ? 'Sound on' : 'Sound off';
     }
     if (!sound.supported) soundBtn.hidden = true;
+    sound.onChange(syncSoundBtn);
     syncSoundBtn();
 
     /* ---------------- Intro: drawing ---------------- */
@@ -752,9 +775,8 @@
     /* ---------------- Intro: flow ---------------- */
 
     function play() {
-        gated = false;
         intro.style.display = '';
-        intro.classList.remove('done', 'reveal', 'playing', 'gated');
+        intro.classList.remove('done', 'reveal', 'playing');
         void intro.offsetWidth; // restart CSS animations
         intro.classList.add('playing');
         body.classList.add('intro-active');
@@ -769,20 +791,11 @@
         raf = requestAnimationFrame(frame);
     }
 
-    // Start from a click or key press so audio is allowed
-    function begin() {
-        if (!gated) return;
-        sound.unlock();
-        play();
-    }
-
     function finish(natural = false) {
-        if (!running && !gated) return;
+        if (!running) return;
         running = false;
-        gated = false;
         cancelAnimationFrame(raf);
         sound.stop(natural ? 0.4 : 0.05);
-        intro.classList.remove('gated');
         intro.classList.add('done');
         body.classList.remove('intro-active');
         body.classList.add('ready');
@@ -796,22 +809,24 @@
         body.classList.add('ready');
     }
 
-    intro.addEventListener('click', () => (gated ? begin() : finish()));
+    intro.addEventListener('click', () => finish());
     intro.querySelector('.intro-skip').addEventListener('click', e => {
         e.stopPropagation();
         finish();
     });
+    // Browsers block sound until the visitor interacts, so this button also unlocks it
     soundBtn.addEventListener('click', e => {
         e.stopPropagation();
-        sound.unlock();
-        sound.setMuted(!sound.isMuted());
+        if (sound.audible()) {
+            sound.setMuted(true);
+        } else {
+            sound.setMuted(false);
+            sound.unlock();
+        }
         syncSoundBtn();
     });
     window.addEventListener('keydown', e => {
-        if (gated) {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); begin(); }
-            else if (e.key === 'Escape') finish();
-        } else if (running && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) {
+        if (running && (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ')) {
             e.preventDefault();
             finish();
         }
@@ -829,9 +844,13 @@
     if (reduceMotion || seen) {
         skipImmediately();
     } else {
-        gated = true;
-        intro.classList.add('gated');
-        intro.querySelector('.intro-start').focus({ preventScroll: true });
+        // Wait for fonts so the scope labels render in the right face
+        const go = () => play();
+        if (document.fonts && document.fonts.ready) {
+            Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 600))]).then(go);
+        } else {
+            go();
+        }
     }
 
     /* ---------------- Hero: orbital tracks ---------------- */
